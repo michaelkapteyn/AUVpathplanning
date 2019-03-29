@@ -116,7 +116,7 @@ def dijkstra_planning(cost_map, start, goal, vis):
     return nodes[::-1]
 
 
-def generate_cost_map(U, V, auv_speed, alpha, env, auv):
+def generate_cost_map(U, V, auv_speed, alpha, env, auv, costfunction):
     z = auv.origin[2]
     cost_map = np.ones_like(U).tolist()
     for x_ind,Ucol in enumerate(U):
@@ -128,7 +128,7 @@ def generate_cost_map(U, V, auv_speed, alpha, env, auv):
                 x2,y2 = pos[0] + x_ind, pos[1] + y_ind
                 if x2 >= 0 and x2 < env.discretization_x and y2 >= 0 and y2 < env.discretization_y:
                     node2 = Node(None,[x2,y2,z],U,V)
-                    time, V_AUV = traversal(node1, node2, auv_speed)
+                    time, V_AUV = costfunction(node1, node2, auv_speed)
                     vauvs.append(V_AUV)
                     node2.risk = env.actualRisk(node2.position[0],node2.position[1],node2.position[2])
                     cost = (1/(1-alpha*node2.risk + 1e-10))*time
@@ -148,7 +148,7 @@ def generate_cost_map(U, V, auv_speed, alpha, env, auv):
     return cost_map
 
 
-def global_planner(auv, env, vis, alpha):
+def global_planner(auv, env, vis, cost, alpha):
     np.set_printoptions(threshold = np.nan)
     start = auv.origin
     end = auv.goal
@@ -162,7 +162,7 @@ def global_planner(auv, env, vis, alpha):
     risk = env.RiskField
     auv_speed = auv.speed
 
-    cost_map = generate_cost_map(U,V,auv_speed, alpha, env, auv)
+    cost_map = generate_cost_map(U,V,auv_speed, alpha, env, auv, cost)
     # print(cost_map)
     nodes = dijkstra_planning(cost_map, start, end, vis)
     # rx,ry=[],[]

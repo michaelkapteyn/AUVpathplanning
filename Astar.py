@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from utils import *
 class Node:
     """A node class for Dijkstra Pathfinding"""
     def __init__(self, parent=None, position=None, U= None, V=None, current_cost=np.inf):
@@ -25,12 +26,6 @@ class Node:
         self.cost = new_cost
     def update_vauvs(self, vauvs):
         self.V_AUVs = vauvs
-
-"""
-Return the distance from node1 to node2
-"""
-def dist(node1, node2):
-    return ((node1.position[0] - node2.position[0]) ** 2) + ((node1.position[1] - node2.position[1]) ** 2)
 
 """
 Return a unit vector pointing from node1 to node2
@@ -100,7 +95,7 @@ Input: an AUV object and an Environment object
 Output: the computed path as a list of Nodes, in the order they are visited
         each node has .VUAV attribute, which is the AUV velocity vector at that node
 """
-def astar(auv, env, alpha, vis):
+def astar(auv, env, cost, heuristic, alpha, vis):
     debug = False
     start = auv.origin
     end = auv.goal
@@ -185,13 +180,12 @@ def astar(auv, env, alpha, vis):
 
             S = auv.speed
             # Create the f, g, and h values
-            child.timeToChild, child.V_AUV = traversal(current_node, child, S)
+            child.timeToChild, child.V_AUV = cost(current_node, child, S, alpha)
             child.risk = env.actualRisk(child.position[0],child.position[1],child.position[2])
-            riskfactor = (1/(1-alpha*child.risk + 1e-10))
             child.g = current_node.g + riskfactor*child.timeToChild
 
 
-            timeToGoal, V_AUVgoal = traversal(child, end_node, S)
+            timeToGoal = heuristic(child, end_node, S)
             child.h = riskfactor*timeToGoal
 
             child.f = child.g + child.h

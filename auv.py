@@ -45,7 +45,7 @@ class AUV:
         print('goal: ', self.goal)
         # print('path: ',self.path)
 
-    def PlanPath(self, env, alg, vis, alpha):
+    def PlanPath(self, env, alg, cost, heuristic, vis, alpha):
         '''
         This is our intelligent function that comes up with a path!
         '''
@@ -56,9 +56,9 @@ class AUV:
             raise Exception("Path planner did not plan any path. Please specify the AUV's origin and goal first!")
 
         if alg == "A*":
-            self.path = astar(auv = self, env=env, vis=vis, alpha = alpha)
+            self.path = astar(auv = self, env=env, cost=cost, heuristic=heuristic, vis=vis, alpha = alpha)
         elif alg == "Dijkstra":
-            self.path = global_planner(auv=self, env=env, vis=vis, alpha=alpha)
+            self.path = global_planner(auv=self, env=env, cost=cost, vis=vis, alpha=alpha)
         else:
             speed_x = 0.3
             speed_y = 0.20
