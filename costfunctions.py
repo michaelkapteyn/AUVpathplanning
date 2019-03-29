@@ -53,8 +53,6 @@ def costwithcurrents(node1, node2, AUVspeed, alpha):
 
     V_AUV = list[np.argmax([np.dot(V+V_current,s) for V in list])]
 
-    # V_AUV = S*s
-
     # compute the speed we are travelling in the target direction, i.e. from node1 to node2
     SpeedInTargetDirection = np.dot(V_AUV,s) + np.dot(V_current,s)
 

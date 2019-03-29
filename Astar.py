@@ -12,8 +12,9 @@ class Node:
         self.current = currentAt(self, U, V)
         self.cost = current_cost
         self.transition_cost = None
-        self.V_AUV = None#np.array((0,0))
+        self.V_AUV = None
         self.V_AUVs = None
+        self.risk = None
     def __str__(self):
         return str(self.position) + "," + str(self.parent) + "," + str(self.cost)
     def __repr__(self):
@@ -180,13 +181,13 @@ def astar(auv, env, cost, heuristic, alpha, vis):
 
             S = auv.speed
             # Create the f, g, and h values
-            child.timeToChild, child.V_AUV = cost(current_node, child, S, alpha)
             child.risk = env.actualRisk(child.position[0],child.position[1],child.position[2])
-            child.g = current_node.g + riskfactor*child.timeToChild
+            child.timeToChild, child.V_AUV = cost(current_node, child, S, alpha)
+            child.g = current_node.g + child.timeToChild
 
 
             timeToGoal = heuristic(child, end_node, S)
-            child.h = riskfactor*timeToGoal
+            child.h = timeToGoal
 
             child.f = child.g + child.h
 

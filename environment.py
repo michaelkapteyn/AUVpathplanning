@@ -134,7 +134,7 @@ class ENVIRONMENT:
             return -10
         
         # in case no reef function is specified take a standard reef function
-        if ReefFunction == None:
+        if ReefFunction == None or ReefFunction == 'reef':
             ReefFunction = StandardReefFunction
             self.showcontours = True
         elif ReefFunction == 'pool':

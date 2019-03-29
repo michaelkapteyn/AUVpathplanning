@@ -44,7 +44,7 @@ class VISUALIZATION:
         rgba_colors[:,0] = 1.0
         # the fourth column needs to be your alphas
         rgba_colors[:, 3] = np.transpose(self.Environment.RiskField).flatten()
-        self.ax.scatter(self.Environment.X.flatten(), self.Environment.Y.flatten(), color=rgba_colors)
+        self.ax.scatter(self.Environment.X.flatten(), self.Environment.Y.flatten(), 0.1, color=rgba_colors)
 #         plt.show()
 
     def ShowCurrent(self):

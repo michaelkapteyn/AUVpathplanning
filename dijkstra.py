@@ -39,11 +39,12 @@ def dijkstra_planning(cost_map, start, goal, vis):
         closedlist.append(c_id)
 
         if c_id == goal:
-            print("goal is found!")
+            print('Goal found!')
             ngoal.parent = current.parent
             ngoal.cost = current.cost
 
             if vis is not None:
+                print('Preparing visualization...')
                 # Writer = animation.writers['ffmpeg']
                 # writer = Writer(fps=15, metadata=dict(artist='Me'), bitrate=1800)
                 skip = 15
@@ -61,6 +62,7 @@ def dijkstra_planning(cost_map, start, goal, vis):
                 # plt.pause(0.001)
                 # anim.save('djikstra.mp4', writer=writer)
 #                 plt.show()
+                print('Complete!')
             break
 
         # Remove the item from the open set
@@ -128,10 +130,9 @@ def generate_cost_map(U, V, auv_speed, alpha, env, auv, costfunction):
                 x2,y2 = pos[0] + x_ind, pos[1] + y_ind
                 if x2 >= 0 and x2 < env.discretization_x and y2 >= 0 and y2 < env.discretization_y:
                     node2 = Node(None,[x2,y2,z],U,V)
-                    time, V_AUV = costfunction(node1, node2, auv_speed)
-                    vauvs.append(V_AUV)
                     node2.risk = env.actualRisk(node2.position[0],node2.position[1],node2.position[2])
-                    cost = (1/(1-alpha*node2.risk + 1e-10))*time
+                    cost, V_AUV = costfunction(node1, node2, auv_speed, alpha)
+                    vauvs.append(V_AUV)
                     edges.append(cost)
                 else:
                     vauvs.append(None)
@@ -143,7 +144,7 @@ def generate_cost_map(U, V, auv_speed, alpha, env, auv, costfunction):
             # print(node1)
             # print(cost_map)
             cost_map[x_ind][y_ind] = node1
-    print('Cost map generated!')
+    
 
     return cost_map
 
@@ -161,9 +162,10 @@ def global_planner(auv, env, vis, cost, alpha):
     U, V = env.CurrentField_x, env.CurrentField_y
     risk = env.RiskField
     auv_speed = auv.speed
-
+    print('Generated Cost map...')
     cost_map = generate_cost_map(U,V,auv_speed, alpha, env, auv, cost)
-    # print(cost_map)
+    print('Completed!')
+    print('Searching for path to goal...')
     nodes = dijkstra_planning(cost_map, start, end, vis)
     # rx,ry=[],[]
     # for node in nodes:
