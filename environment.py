@@ -62,8 +62,8 @@ class ENVIRONMENT:
         # subtract independence P(A and B) = P(A) + P(B) - P(A U B)
         if ctr > 1:
             risk = risk * 0.9**ctr
-        # step: check hard collisions with reef
-        if self.collision_checker(x, y, z, tol = 0.2) == True:
+        # step: check hard collisions with reef (tolerance could be set here, e.g. tol = 0.2)
+        if self.collision_checker(x, y, z, tol = 0.0) == True:
             risk += 1
         else: pass
 
