@@ -14,7 +14,7 @@ def computeunitvector(node1, node2):
     s = s[0:2].flatten()
     ns = np.linalg.norm(s)
     if ns < 1e-10:
-        return (0, np.array((0,0)))
+        return np.array((0,0))
     s = s/ns
     
     return s
