@@ -7,7 +7,7 @@ class ENVIRONMENT:
 
     def __init__(self,Mission = None, ReefFunction=None, UnknownRegions={}, discretization_x=101, discretization_y=101, blur = False):
         import numpy as np
-        # Standard values
+        # set default values
         self.showcontours = None
         self.mission = Mission
         self.Dimension_x = self.mission.worldsize_x
@@ -16,10 +16,9 @@ class ENVIRONMENT:
         self.Current = [0.3,1.1,10]
         self.discretization_x = self.mission.discretization
         self.discretization_y = self.mission.discretization
-
         self.UnknownRegions = UnknownRegions
         
-        # risk
+        # generate grid
         self.x = np.linspace(0, self.Dimension_x, self.discretization_x)
         self.y = np.linspace(0, self.Dimension_y, self.discretization_y)
         self.X, self.Y = np.meshgrid(self.x, self.y)
@@ -29,9 +28,11 @@ class ENVIRONMENT:
         self.RiskField = self.GenerateRiskField()
         self.CurrentField_x, self.CurrentField_y = self.GenerateCurrentField(type="none")
 
+        # blur if requested
         if blur:
             self.Blur()
 
+    # function for blurring the risk field
     def Blur(self):
         self.blur=True
         self.std_dev = 0.0 # up to 1.5 possible
@@ -74,9 +75,11 @@ class ENVIRONMENT:
 
         return risk
 
+    # function for generating a 2-d vector field for currents
     def GenerateCurrentField(self, type = "whirlpool", max_strength=1):
-        # TODO: Do not loop over everything anymore but make meshgrid and zip the x and y meshgrids
         import numpy as np
+        
+        # distinguishing current types
         if type == "none":
             CurrentField_x = np.zeros((len(self.x),len(self.y)))
             CurrentField_y = np.zeros((len(self.x),len(self.y)))
@@ -102,8 +105,8 @@ class ENVIRONMENT:
                     CurrentField_y[i][j] = y
         return CurrentField_x, CurrentField_y
 
+    # function for generating a 2-d array for risk
     def GenerateRiskField(self):
-        # TODO: Do not loop over everything anymore but make meshgrid and zip the x and y meshgrids
         import numpy as np
         RiskField = np.zeros((len(self.x),len(self.y)))
         for i,x in enumerate(self.x):
@@ -122,7 +125,7 @@ class ENVIRONMENT:
         G = scipy.ndimage.gaussian_filter(r, sigma, mode='reflect', cval=0.0, truncate=4.0)
         return G
 
-
+    # function for setting the reef for the environment
     def SetReef(self,ReefFunction):
         import numpy as np
         def StandardReefFunction(x, y):
@@ -144,6 +147,7 @@ class ENVIRONMENT:
 
         return ReefFunction
 
+    # function that checks for collisions
     def collision_checker(self,x,y,z,tol):
         """
         Checks collisions with the reef
