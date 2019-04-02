@@ -17,7 +17,6 @@ class AUV:
         self.goal = (None,None,None)
         self.path = None
         self.mission = None
-
         self.speed = 10
 
         # define AUV body [m] (those coordinates are centered on (0,0))
@@ -40,10 +39,10 @@ class AUV:
         self.codes0 = list(zip(*path_data))[0]
         self.height = 0.30 # vehicle diameter (cylindrical body)
 
+    # function for returning vehicle state
     def StateInfo(self):
         print('origin: ',self.origin)
         print('goal: ', self.goal)
-        # print('path: ',self.path)
 
     def PlanPath(self, env, alg, cost, heuristic, vis, alpha):
         '''
@@ -55,6 +54,7 @@ class AUV:
         if self.origin == None or self.goal == None:
             raise Exception("Path planner did not plan any path. Please specify the AUV's origin and goal first!")
 
+        # select path planning algorithm/method
         if alg == "A*":
             self.path = astar(auv = self, env=env, cost=cost, heuristic=heuristic, vis=vis, alpha = alpha)
         elif alg == "Dijkstra":
