@@ -4,6 +4,8 @@ from numpy import dtype
 import numpy as np
 from numpy import Inf
 from Astar import astar
+
+# class for visualizing the environment, mission, path, the problem, etc.
 class VISUALIZATION:
 
     def __init__(self,auv,env):
@@ -13,24 +15,24 @@ class VISUALIZATION:
         self.Environment = env
         self.ax.set_aspect('equal', 'box')
 
+    # function for displaying the reef
     def ShowReef(self):
         import matplotlib.pyplot as plt
         if self.Environment.showcontours == True:
             CS = plt.contourf(self.Environment.X, self.Environment.Y, self.Environment.Reef(self.Environment.X,self.Environment.Y), 8, alpha=.75, cmap='gray')
             plt.colorbar(CS)
-            #return CS
         else:
             self.ax.set_xlim(left=0, right=100)
             self.ax.set_ylim(bottom=0, top=100)
             self.ax.plot(self.AUV.origin[0],self.AUV.origin[1],'ko')
             self.ax.plot(self.AUV.goal[0],self.AUV.goal[1],'g*')
-#             plt.show()
 
+    # function for showing the obstacles
     def ShowObstacles(self,depth):
         r = np.vectorize(self.Environment.Reef)               
         self.ax.contourf(self.Environment.X, self.Environment.Y, r(self.Environment.X, self.Environment.Y),levels = [depth,Inf], colors = 'red')
-#         plt.show()
     
+    # function for showing the unknown regions
     def ShowUnknownRegions(self):
         from matplotlib import path as mpath
         import matplotlib.patches as patches
@@ -38,6 +40,8 @@ class VISUALIZATION:
         for risk_key in self.Environment.UnknownRegions:
             unknown_region = patches.PathPatch(mpath.Path(self.Environment.UnknownRegions[risk_key]), facecolor='red', lw=0.0001, alpha = risk_key)
             self.ax.add_patch(unknown_region)
+    
+    # function for showing the risk
     def ShowRisk(self):
         rgba_colors = np.zeros((len(self.Environment.X.flatten()),4))
         # for red the first column needs to be one
@@ -45,13 +49,14 @@ class VISUALIZATION:
         # the fourth column needs to be your alphas
         rgba_colors[:, 3] = np.transpose(self.Environment.RiskField).flatten()
         self.ax.scatter(self.Environment.X.flatten(), self.Environment.Y.flatten(), 0.1, color=rgba_colors)
-#         plt.show()
 
+    # function for showing the current
     def ShowCurrent(self):
         strengths = np.power(np.power(self.Environment.CurrentField_x,2)+np.power(self.Environment.CurrentField_y,2),0.5)
         strengths = strengths/np.max(strengths)
         self.ax.streamplot(self.Environment.X, self.Environment.Y, self.Environment.CurrentField_x, self.Environment.CurrentField_y,color='blue', linewidth=0.5*strengths)
 
+    # function for sending the AUV on its exploration mission
     def Explore(self):
         import numpy as np
         import matplotlib.patches as patches
@@ -70,7 +75,6 @@ class VISUALIZATION:
 
         # update coordinates of obstacle contour at vehicle depth
         self.ShowObstacles(-9.5)
-        #self.ax.contourf(self.Environment.x, self.Environment.y, self.Environment.Reef(self.Environment.X, self.Environment.Y),levels = [self.AUV.origin[2],self.AUV.origin[2]+10], colors = 'red')#, linewidths = 0.5, linestyles = 'solid')
         pathline, = self.ax.plot(self.AUV.origin[0], self.AUV.origin[1], color='k', linewidth=2)
         def init():
             self.ax.add_patch(agent)
@@ -81,13 +85,11 @@ class VISUALIZATION:
             animateAUV(z)
             AnimateObstacleContour(z)
             return []
-
+    
+        # function for animating the AUV
         def animateAUV(z):
-            # plt.pause(0.1*self.AUV.path[z].timeToChild)
-            # animation.Animation.event_source.interval = self.AUV.path[z].timeToChild
             # turn the vehicle so it points tangential to its path between the previous and the next point
             orientation = np.rad2deg(np.arctan2(self.AUV.path[z].V_AUV[1],self.AUV.path[z].V_AUV[0]))
-            # orientation = np.rad2deg(np.arctan2( self.AUV.path[z].position[1] - self.AUV.path[z - 1].position[1] , self.AUV.path[z].position[0] - self.AUV.path[z - 1].position[0] ))
             rot_coordinates = Affine2D().rotate_deg(orientation).transform(self.AUV.verts0)
 
             # coordinate transformation: broadcast coordinates to all vehicle vertices
@@ -100,11 +102,9 @@ class VISUALIZATION:
             pathline.set_data([node.position[0] for node in self.AUV.path[0:z]], [node.position[1] for node in self.AUV.path[0:z]])
             return pat,pathline
 
+        # function for displaying the vehicle's changes in orientation
         def AnimateObstacleContour(z):
             del self.ax.collections[-1]
-            # old:
-            #self.ax.contourf(self.Environment.x, self.Environment.y, self.Environment.Reef(self.Environment.X, self.Environment.Y),levels = [self.AUV.path[z].position[2],self.AUV.path[z].position[2]+10], colors = 'red')#, linewidths = 0.5, linestyles = 'solid')
-            # new:
             self.ShowObstacles(self.AUV.path[z].position[2])
             return
 
