@@ -38,17 +38,6 @@ def InspectReefData3D():
     ax.set_aspect('equal', 'box')
     ax.grid(False)
     
-    # Add a color bar which maps values to colors.
-    #fig.colorbar(surf)
-    
-    
-    # # plane
-    # Z2 = 0*x + 0*y - 9.5
-    # surf = ax.plot_surface(x, y, Z2,cmap='gray')
-    # 
-    # # contour lines
-    # ax.contour(X, Y, StandardReefFunction(X, Y),levels = [-9.5], colors = 'red', linewidths = 1, linestyles = 'solid',zorder=10)
-    
     plt.show()
 
 def InspectReefData2D():
