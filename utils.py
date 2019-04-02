@@ -14,10 +14,10 @@ def computeunitvector(node1, node2):
     s = s[0:2].flatten()
     ns = np.linalg.norm(s)
     if ns < 1e-10:
-        return (0, np.array((0,0)))
+        return np.array((0,0))
     s = s/ns
-    
     return s
+
 def InspectReefData3D():
     def StandardReefFunction(x, y):
         x = (x-0.5 *100)/15

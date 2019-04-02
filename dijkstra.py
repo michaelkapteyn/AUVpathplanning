@@ -131,7 +131,7 @@ def generate_cost_map(U, V, auv_speed, alpha, env, auv, costfunction):
                 if x2 >= 0 and x2 < env.discretization_x and y2 >= 0 and y2 < env.discretization_y:
                     node2 = Node(None,[x2,y2,z],U,V)
                     node2.risk = env.actualRisk(node2.position[0],node2.position[1],node2.position[2])
-                    cost, V_AUV = costfunction(node1, node2, auv_speed, alpha)
+                    cost, V_AUV = costfunction(node1, node2, auv_speed)#, alpha)
                     vauvs.append(V_AUV)
                     edges.append(cost)
                 else:

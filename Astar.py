@@ -182,7 +182,10 @@ def astar(auv, env, cost, heuristic, alpha, vis):
             S = auv.speed
             # Create the f, g, and h values
             child.risk = env.actualRisk(child.position[0],child.position[1],child.position[2])
-            child.timeToChild, child.V_AUV = cost(current_node, child, S, alpha)
+            if cost.__name__ == "cost_no_current_no_risk":
+                child.timeToChild, child.V_AUV = cost(current_node, child, S)
+            else: 
+                child.timeToChild, child.V_AUV = cost(current_node, child, S, alpha)
             child.g = current_node.g + child.timeToChild
 
 
