@@ -238,8 +238,6 @@ def test_blurRiskField(fn):
     # check types & content
     assert_equal(type(student_answer),type(np.array([0,0])))
     assert_equal(student_answer.shape,(101,101))
-    #TODO
-    #assert_allclose(student_answer,student_answer,rtol=5e-1,atol=0.5,err_msg="There seems to be a problem with the values your function returns!")
     
     test_ok()
     
@@ -250,7 +248,6 @@ def test_costwithcurrents(fn):
     # set up sample problem 1
     n1 = Node(None, (1,1))
     n2 = Node(None, (1,1))
-    ##additional info
     n1.current = np.array((0.3, 0.1))
     n2.risk = 0.4
     student_answer = fn(n1, n2, speed, alpha)
@@ -266,7 +263,6 @@ def test_costwithcurrents(fn):
     # set up sample problem 2
     n1 = Node(None, (1,1))
     n2 = Node(None, (10,10))
-    #additional info
     n1.current = np.array((0.3, 0.1))
     n2.risk = 0.15
     student_answer = fn(n1, n2, speed,alpha)
@@ -331,8 +327,7 @@ def test_heuristicwithcurrents(fn):
     speed = 3.0
     n1.current = np.array((1.5, 0.9))
     student_answer = fn(n1, n2, speed, max_strength)
-#     print(student_answer)
-#     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
+    assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
     assert_equal(student_answer, 40.5,msg="There seems to be a problem with the values your function returns! Expected value is 40.5.")
 
     # set up sample problem 3
