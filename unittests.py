@@ -315,12 +315,13 @@ def test_costwithcurrents(fn):
 def test_heuristicwithcurrents(fn):
     speed = 1
     alpha = 0
+    max_strength = 1
 
     # set up sample problem 1
     n1 = Node(None, (1,1))
     n2 = Node(None, (1,1))
     n1.current = np.array((0.5, 0.4))
-    student_answer = fn(n1, n2, speed)
+    student_answer = fn(n1, n2, speed, max_strength)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
     assert_equal(student_answer, 0.0,msg="There seems to be a problem with the values your function returns! Expected value is 0.0.")
     
@@ -329,26 +330,68 @@ def test_heuristicwithcurrents(fn):
     n2 = Node(None, (10,10))
     speed = 3.0
     n1.current = np.array((1.5, 0.9))
-    student_answer = fn(n1, n2, speed)
-    assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 54.0,msg="There seems to be a problem with the values your function returns! Expected value is 162.0.")
+    student_answer = fn(n1, n2, speed, max_strength)
+#     print(student_answer)
+#     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
+    assert_equal(student_answer, 40.5,msg="There seems to be a problem with the values your function returns! Expected value is 40.5.")
 
     # set up sample problem 3
     n1 = Node(None, (-1,1))
     n2 = Node(None, (10,-10))
     speed = 0.8
     n1.current = np.array((1.1, 0.7))
-    student_answer = fn(n1, n2, speed)
+    student_answer = fn(n1, n2, speed, max_strength)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 302.5,msg="There seems to be a problem with the values your function returns! Expected value is 242.0.")
+    assert_equal(student_answer, 134.44444444444443,msg="There seems to be a problem with the values your function returns! Expected value is 134.44444444444443.")
     
     # set up sample problem 4
     n1 = Node(None, (-1,1))
     n2 = Node(None, (10,-10))
     speed = 10
     n1.current = np.array((5.1, 2.9))
-    student_answer = fn(n1, n2, speed)
+    student_answer = fn(n1, n2, speed, max_strength)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 24.2,msg="There seems to be a problem with the values your function returns! Expected value is 24.2.")
+    assert_equal(student_answer, 22.0,msg="There seems to be a problem with the values your function returns! Expected value is 22.0.")
+    
+    max_strength = 10
+    
+    # set up sample problem 5
+    n1 = Node(None, (1,1))
+    n2 = Node(None, (1,1))
+    n1.current = np.array((0.5, 0.4))
+    student_answer = fn(n1, n2, speed, max_strength)
+    assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
+    assert_equal(student_answer, 0.0,msg="There seems to be a problem with the values your function returns! Expected value is 0.0.")
+    
+    max_strength = 0
+    
+    # set up sample problem 6
+    n1 = Node(None, (1,1))
+    n2 = Node(None, (10,10))
+    speed = 3.0
+    n1.current = np.array((1.5, 0.9))
+    student_answer = fn(n1, n2, speed, max_strength)
+    assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
+    assert_equal(student_answer, 54.0,msg="There seems to be a problem with the values your function returns! Expected value is 54.0.")
+    
+    max_strength = 5
+
+    # set up sample problem 7
+    n1 = Node(None, (-1,1))
+    n2 = Node(None, (10,-10))
+    speed = 0.8
+    n1.current = np.array((1.1, 0.7))
+    student_answer = fn(n1, n2, speed, max_strength)
+    assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
+    assert_equal(student_answer, 41.724137931034484,msg="There seems to be a problem with the values your function returns! Expected value is 41.724137931034484.")
+    
+    # set up sample problem 8
+    n1 = Node(None, (-1,1))
+    n2 = Node(None, (10,-10))
+    speed = 10
+    n1.current = np.array((5.1, 2.9))
+    student_answer = fn(n1, n2, speed, max_strength)
+    assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
+    assert_equal(student_answer, 16.133333333333333,msg="There seems to be a problem with the values your function returns! Expected value is 16.133333333333333.")
 
     test_ok()

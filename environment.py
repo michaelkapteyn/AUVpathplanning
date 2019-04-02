@@ -74,7 +74,7 @@ class ENVIRONMENT:
 
         return risk
 
-    def GenerateCurrentField(self, type = "whirlpool", max_strength=10):
+    def GenerateCurrentField(self, type = "whirlpool", max_strength=1):
         # TODO: Do not loop over everything anymore but make meshgrid and zip the x and y meshgrids
         import numpy as np
         if type == "none":
