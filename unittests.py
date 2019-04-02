@@ -5,14 +5,11 @@ Various utiltiy and testing functions
 """
 from nose.tools import assert_equal, ok_
 from IPython.display import display, HTML, clear_output
-<<<<<<< HEAD
 from Astar import Node
 import numpy as np
 from numpy.testing import assert_allclose
 from environment import ENVIRONMENT
 from mission import MISSION
-=======
->>>>>>> 3090f9b6467a783f789a12f687e7cea4e2d990ed
 
 def test_ok():
     """ If execution gets to this point, print out a happy message """
@@ -24,7 +21,6 @@ def test_ok():
     except:
         print("Tests passed!!")
         
-<<<<<<< HEAD
 def test_costfunction(fn):
     speed = 1
     alpha = 0
@@ -356,5 +352,3 @@ def test_heuristicwithcurrents(fn):
     assert_equal(student_answer, 24.2,msg="There seems to be a problem with the values your function returns! Expected value is 24.2.")
 
     test_ok()
-=======
->>>>>>> 3090f9b6467a783f789a12f687e7cea4e2d990ed
