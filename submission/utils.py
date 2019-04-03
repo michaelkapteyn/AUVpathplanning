@@ -6,17 +6,7 @@ import matplotlib.pyplot as plt
 Return the distance from node1 to node2
 """
 def dist(node1, node2):
-    return ((node1.position[0] - node2.position[0]) ** 2) + ((node1.position[1] - node2.position[1]) ** 2)
-
-def computeunitvector(node1, node2):
-    #Unit vector from node1 to node2: use only x,y components
-    s = np.array(node2.position)-np.array(node1.position)
-    s = s[0:2].flatten()
-    ns = np.linalg.norm(s)
-    if ns < 1e-10:
-        return np.array((0,0))
-    s = s/ns
-    return s
+    return (((node1.position[0] - node2.position[0]) ** 2) + ((node1.position[1] - node2.position[1]) ** 2)) **0.5
 
 def InspectReefData3D():
     def StandardReefFunction(x, y):

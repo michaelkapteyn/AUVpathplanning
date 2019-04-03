@@ -42,7 +42,7 @@ def test_costfunction(fn):
     n1 = Node(None, (1,1))
     n2 = Node(None, (10,10))
     student_answer = fn(n1, n2, speed)
-    correct_answer = (162.0, np.array([0.70710678,  0.70710678]))
+    correct_answer = (12.727922061357855, np.array([0.70710678,  0.70710678]))
     
     # check types & content
     assert_equal(type(student_answer),tuple,msg="Please make sure your types meet the specification!")
@@ -55,7 +55,7 @@ def test_costfunction(fn):
     n1 = Node(None, (-1,1))
     n2 = Node(None, (10,-10))
     student_answer = fn(n1, n2, speed)
-    correct_answer = (242.0, np.array([0.70710678, -0.70710678]))
+    correct_answer = (15.556349186104045, np.array([0.70710678, -0.70710678]))
     
     # check types & content
     assert_equal(type(student_answer),tuple,msg="Please make sure your types meet the specification!")
@@ -69,7 +69,7 @@ def test_costfunction(fn):
     n2 = Node(None, (10,-10))
     speed = 10
     student_answer = fn(n1, n2, speed)
-    correct_answer = (24.2, np.array([7.07106781, -7.07106781]))
+    correct_answer = (1.5556349186104046, np.array([7.07106781, -7.07106781]))
     
     # check types & content
     assert_equal(type(student_answer),tuple,msg="Please make sure your types meet the specification!")
@@ -96,14 +96,14 @@ def test_heuristic(fn):
     n2 = Node(None, (10,10))
     student_answer = fn(n1, n2, speed)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 162.0,msg="There seems to be a problem with the values your function returns! Expected value is 162.0.")
+    assert_equal(student_answer, 12.727922061357855,msg="There seems to be a problem with the values your function returns! Expected value is 12.727922061357855.")
 
     # set up sample problem 3
     n1 = Node(None, (-1,1))
     n2 = Node(None, (10,-10))
     student_answer = fn(n1, n2, speed)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 242.0,msg="There seems to be a problem with the values your function returns! Expected value is 242.0.")
+    assert_equal(student_answer, 15.556349186104045,msg="There seems to be a problem with the values your function returns! Expected value is 15.556349186104045.")
     
     # set up sample problem 4
     n1 = Node(None, (-1,1))
@@ -111,7 +111,7 @@ def test_heuristic(fn):
     speed = 10
     student_answer = fn(n1, n2, speed)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 24.2,msg="There seems to be a problem with the values your function returns! Expected value is 24.2.")
+    assert_equal(student_answer, 1.5556349186104046,msg="There seems to be a problem with the values your function returns! Expected value is 1.5556349186104046.")
 
     test_ok()
     
@@ -140,7 +140,7 @@ def test_costwithrisk(fn):
     AUVspeed = 3
     alpha = 0.2
     student_answer = fn(n1, n2, AUVspeed,alpha)
-    correct_answer = (62.790697667117364, np.array([ 2.12132034,  2.12132034]))
+    correct_answer = (4.933303123983668, np.array([ 2.12132034,  2.12132034]))
     
     # check types & content
     assert_equal(type(student_answer),tuple,msg="Please make sure your types meet the specification!")
@@ -156,7 +156,7 @@ def test_costwithrisk(fn):
     AUVspeed = 5
     alpha = 0.5
     student_answer = fn(n1, n2, AUVspeed,alpha)
-    correct_answer = (87.99999998399998, np.array([ 3.53553391, -3.53553391]))
+    correct_answer = (5.656854248463861, np.array([ 3.53553391, -3.53553391]))
     
     # check types & content
     assert_equal(type(student_answer),tuple,msg="Please make sure your types meet the specification!")
@@ -172,7 +172,7 @@ def test_costwithrisk(fn):
     AUVspeed = 9
     alpha = 0.8
     student_answer = fn(n1, n2, AUVspeed,alpha)
-    correct_answer = (29.227053136919768, np.array([ 6.36396103, -6.36396103]))
+    correct_answer = (1.8787861333832294, np.array([ 6.36396103, -6.36396103]))
     
     # check types & content
     assert_equal(type(student_answer),tuple,msg="Please make sure your types meet the specification!")
@@ -200,7 +200,7 @@ def test_heuristicwithrisk(fn):
     n2 = Node(None, (10,10))
     student_answer = fn(n1, n2, speed)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 162.0,msg="There seems to be a problem with the values your function returns! Expected value is 162.0.")
+    assert_equal(student_answer, 12.727922061357855,msg="There seems to be a problem with the values your function returns! Expected value is 12.727922061357855.")
 
     # set up sample problem 3
     n1 = Node(None, (-1,1))
@@ -208,7 +208,7 @@ def test_heuristicwithrisk(fn):
     n2.risk = 0.5
     student_answer = fn(n1, n2, speed)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 242.0,msg="There seems to be a problem with the values your function returns! Expected value is 242.0.")
+    assert_equal(student_answer, 15.556349186104045,msg="There seems to be a problem with the values your function returns! Expected value is 15.556349186104045.")
     
     # set up sample problem 4
     n1 = Node(None, (-1,1))
@@ -217,7 +217,7 @@ def test_heuristicwithrisk(fn):
     speed = 10
     student_answer = fn(n1, n2, speed)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 24.2,msg="There seems to be a problem with the values your function returns! Expected value is 24.2.")
+    assert_equal(student_answer, 1.5556349186104046,msg="There seems to be a problem with the values your function returns! Expected value is 1.5556349186104046.")
 
     test_ok()
     
@@ -266,7 +266,7 @@ def test_costwithcurrents(fn):
     n1.current = np.array((0.3, 0.1))
     n2.risk = 0.15
     student_answer = fn(n1, n2, speed,alpha)
-    correct_answer = (144.63547795353981, np.array([ 0.6,  0.8]))
+    correct_answer = (11.363636362345042, np.array([ 0.6,  0.8]))
     
     # check types & content
     assert_equal(type(student_answer),tuple,msg="Please make sure your types meet the specification!")
@@ -281,7 +281,7 @@ def test_costwithcurrents(fn):
     n1.current = np.array((0.5, 0.4))
     n2.risk = 0.72
     student_answer = fn(n1, n2, speed,alpha)
-    correct_answer = (677.7971065072265, np.array([ 0.99543561, -0.09543561]))
+    correct_answer = (43.570448207261855, np.array([ 0.99543561, -0.09543561]))
     
     # check types & content
     assert_equal(type(student_answer),tuple,msg="Please make sure your types meet the specification!")
@@ -297,7 +297,7 @@ def test_costwithcurrents(fn):
     n2.risk = 0.72
     speed = 10
     student_answer = fn(n1, n2, speed,alpha)
-    correct_answer = (59.0817410061006, np.array([ 9.83095189, -1.83095189]))
+    correct_answer = (3.7979181554291856, np.array([ 9.83095189, -1.83095189]))
     
     # check types & content
     assert_equal(type(student_answer),tuple,msg="Please make sure your types meet the specification!")
@@ -328,7 +328,7 @@ def test_heuristicwithcurrents(fn):
     n1.current = np.array((1.5, 0.9))
     student_answer = fn(n1, n2, speed, max_strength)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 40.5,msg="There seems to be a problem with the values your function returns! Expected value is 40.5.")
+    assert_equal(student_answer, 3.181980515339464,msg="There seems to be a problem with the values your function returns! Expected value is 3.181980515339464.")
 
     # set up sample problem 3
     n1 = Node(None, (-1,1))
@@ -337,7 +337,7 @@ def test_heuristicwithcurrents(fn):
     n1.current = np.array((1.1, 0.7))
     student_answer = fn(n1, n2, speed, max_strength)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 134.44444444444443,msg="There seems to be a problem with the values your function returns! Expected value is 134.44444444444443.")
+    assert_equal(student_answer, 8.642416214502248,msg="There seems to be a problem with the values your function returns! Expected value is 8.642416214502248.")
     
     # set up sample problem 4
     n1 = Node(None, (-1,1))
@@ -346,7 +346,7 @@ def test_heuristicwithcurrents(fn):
     n1.current = np.array((5.1, 2.9))
     student_answer = fn(n1, n2, speed, max_strength)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 22.0,msg="There seems to be a problem with the values your function returns! Expected value is 22.0.")
+    assert_equal(student_answer, 1.414213562373095,msg="There seems to be a problem with the values your function returns! Expected value is 1.414213562373095.")
     
     max_strength = 10
     
@@ -367,7 +367,7 @@ def test_heuristicwithcurrents(fn):
     n1.current = np.array((1.5, 0.9))
     student_answer = fn(n1, n2, speed, max_strength)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 54.0,msg="There seems to be a problem with the values your function returns! Expected value is 54.0.")
+    assert_equal(student_answer, 4.242640687119285,msg="There seems to be a problem with the values your function returns! Expected value is 4.242640687119285.")
     
     max_strength = 5
 
@@ -378,7 +378,7 @@ def test_heuristicwithcurrents(fn):
     n1.current = np.array((1.1, 0.7))
     student_answer = fn(n1, n2, speed, max_strength)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 41.724137931034484,msg="There seems to be a problem with the values your function returns! Expected value is 41.724137931034484.")
+    assert_equal(student_answer, 2.682129170017939,msg="There seems to be a problem with the values your function returns! Expected value is 2.682129170017939.")
     
     # set up sample problem 8
     n1 = Node(None, (-1,1))
@@ -387,6 +387,6 @@ def test_heuristicwithcurrents(fn):
     n1.current = np.array((5.1, 2.9))
     student_answer = fn(n1, n2, speed, max_strength)
     assert_equal(type(student_answer),float,msg="Please make sure your types meet the specification!")
-    assert_equal(student_answer, 16.133333333333333,msg="There seems to be a problem with the values your function returns! Expected value is 16.133333333333333.")
+    assert_equal(student_answer, 1.0370899457402696,msg="There seems to be a problem with the values your function returns! Expected value is 1.0370899457402696.")
 
     test_ok()
