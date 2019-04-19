@@ -1,5 +1,4 @@
 # DEPENDENCIES
-%matplotlib inline
 import numpy as np
 from environment import ENVIRONMENT
 import scipy.ndimage
@@ -7,23 +6,10 @@ from auv import AUV
 from Astar import Node
 from visualization import VISUALIZATION
 from mission import MISSION
-from unittests import *
-from numpy.testing import assert_allclose
-from nose.tools import assert_equal
+
 from utils import InspectReefData2D, InspectReefData3D, InspectReefData2DComplete
 import matplotlib.pyplot as plt
-from shapely.geometry import Point
-from shapely.geometry.polygon import Polygon
-from IPython.display import display, HTML
-display(HTML("""
-<style>
-.output {
-    display: flex;
-    align-items: center;
-    text-align: center;
-}
-</style>
-"""))
+
 size = 9
 
 # set size of the plot
@@ -49,7 +35,7 @@ def computeunitvector(node1, node2):
 #####################################
 #####################################
 #####################################
-	
+
 def cost_no_current_no_risk(node1, node2, AUV_speed):
     ### BEGIN SOLUTION
     timetodestination = dist(node1,node2)/AUV_speed
@@ -61,17 +47,17 @@ def cost_no_current_no_risk(node1, node2, AUV_speed):
 #####################################
 #####################################
 #####################################
-	
+
 def heuristic_no_current_no_risk(node1, goal_node, AUV_speed):
     ### BEGIN SOLUTION
     timetodestination = dist(node1,goal_node)/AUV_speed
     return timetodestination
     ### END SOLUTION
-	
+
 #####################################
 #####################################
 #####################################
-	
+
 # define underwater exploration mission
 UEXP = MISSION(discretization_distance=1, worldsize_x=100, worldsize_y=100)
 
@@ -110,7 +96,6 @@ VIS1.ShowReef()
 
 # Plan the path and animate the search process
 anim = AUV1.PlanPath(alg = "Dijkstra", cost=cost_no_current_no_risk, heuristic=None, env = ENV1, vis=VIS1, alpha=0)
-HTML(VIS1.searchAnimation.to_html5_video())
 
 #####################################
 #####################################
@@ -123,7 +108,6 @@ VIS1.ShowReef()
 # plan path for the pool test environment
 AUV1.PlanPath(alg = "A*", cost = cost_no_current_no_risk, heuristic = heuristic_no_current_no_risk, env = ENV1, vis=None, alpha=0)
 VIS1.video = VIS1.Explore()
-HTML(VIS1.video.to_html5_video())
 
 #####################################
 #####################################
@@ -171,7 +155,7 @@ def costwithrisk(node1, node2, AUVspeed, alpha):
     
     return riskfactor*timetodestination, V_AUV
     ### END SOLUTION
-	
+
 #####################################
 #####################################
 #####################################
@@ -181,7 +165,7 @@ def heuristicwithrisk(node1, node2, AUVspeed):
     timetodestination = dist(node1,node2)/AUVspeed
     return timetodestination 
     ### END SOLUTION
-	
+
 #####################################
 #####################################
 #####################################
@@ -197,7 +181,6 @@ AUV1.goal = (90, 50,-9.5)
 
 AUV1.PlanPath(alg = "A*", cost = costwithrisk, heuristic = heuristicwithrisk, env = ENV2, vis=None,  alpha=1)
 VIS2.video = VIS2.Explore()
-HTML(VIS2.video.to_html5_video())
 
 #####################################
 #####################################
